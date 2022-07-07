@@ -1,5 +1,6 @@
-package com.shop.product;
+package com.shop.product.model;
 
+import com.shop.product.model.Category;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
