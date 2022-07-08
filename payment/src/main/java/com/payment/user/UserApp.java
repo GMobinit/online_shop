@@ -1,11 +1,11 @@
-package com.shop.customer;
+package com.payment.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApp {
+public class UserApp {
     public static void main(String[] args) {
-        SpringApplication.run(DemoApp.class, args);
+        SpringApplication.run(UserApp.class,args);
     }
 }

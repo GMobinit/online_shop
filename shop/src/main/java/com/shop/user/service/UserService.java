@@ -33,7 +33,7 @@ public class UserService {
         user.setPassword(encryptedPassword);
         user.setSalt(salt);
 
-        userRepository.insert(user);
+        userRepository.save(user);
 
         return true;
     }
