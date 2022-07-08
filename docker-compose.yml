@@ -19,8 +19,44 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=root
       - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
       - ME_CONFIG_MONGODB_SERVER=mongodb
+  mysql:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: payment
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "5432:3306"
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    networks:
+      - mysql
+    restart: always
+  phpmyadmin:
+    container_name: pma
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8082:80
+    networks:
+      - mysql
 volumes:
   data: {}
+  mysql:
 networks:
   default:
     name: mongodb_network
+  mysql:
+    name: mysql_network
+    driver: bridge
+  spring:
+    driver: bridge
