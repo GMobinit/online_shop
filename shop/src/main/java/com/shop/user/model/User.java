@@ -1,33 +1,26 @@
 package com.shop.user.model;
 
-import com.shop.common.model.TimeTracker;
 import com.shop.user.validator.Password;
 import com.shop.user.validator.Phone;
 import com.shop.user.validator.UserName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.Instant;
-import java.util.Optional;
 
 @Data
 @Document
 @AllArgsConstructor
 @Builder
 @Valid
-@EnableMongoAuditing
 public class User {
     @Id
     private String id;
@@ -53,6 +46,9 @@ public class User {
     private String salt;
     @CreatedDate
     private Instant createdAt;
+    @CreatedDate
+    @LastModifiedDate
+    private Instant updatedAt;
 
     public User() {
         super();
