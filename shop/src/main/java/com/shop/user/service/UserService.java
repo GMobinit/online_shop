@@ -1,16 +1,20 @@
 package com.shop.user.service;
 
 import com.shop.user.model.Gender;
+import com.shop.user.model.PasswordResponse;
 import com.shop.user.model.User;
 import com.shop.user.model.UserRegistrationRequest;
 import com.shop.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -18,7 +22,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordGeneratorService passwordGeneratorService;
+    private final RestTemplate restTemplate;
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -27,11 +31,17 @@ public class UserService {
 
         String password = user.getPassword();
 
-        String salt = passwordGeneratorService.generateSalt();
-        String encryptedPassword = passwordGeneratorService.generateEncryptedPassword(password,salt);
+        PasswordResponse salt = restTemplate.getForObject("http://SECURITY/api/v1/security/salt", PasswordResponse.class);
+        assert salt != null;
+        HashMap<String,String> params = new HashMap<String,String>();
+        String s = salt.saltOrPass();
+        params.put("salt",s);
+        params.put("passWord",user.getPassword());
+        PasswordResponse encryptedPassword = restTemplate.getForObject("http://SECURITY/api/v1/security/encrypt_password/{salt}/{passWord}", PasswordResponse.class,params);
 
-        user.setPassword(encryptedPassword);
-        user.setSalt(salt);
+        assert encryptedPassword != null;
+        user.setPassword(encryptedPassword.saltOrPass());
+        user.setSalt(s);
 
         userRepository.save(user);
 
