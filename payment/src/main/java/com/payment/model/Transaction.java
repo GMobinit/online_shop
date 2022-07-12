@@ -1,4 +1,4 @@
-package com.payment.transaction.model;
+package com.payment.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

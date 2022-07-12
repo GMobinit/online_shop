@@ -1,10 +1,10 @@
-package com.payment.user.model;
+package com.payment.model;
 
 import lombok.*;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Currency;
 
 @Getter
@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String systemUserId;
-    private String wallet;
+    private Long wallet;
     private BigDecimal balance;
     private Currency currency;
 }

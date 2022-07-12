@@ -1,5 +1,7 @@
 package com.shop.user.service;
 
+import com.onlineShop.app.amqp.RabbitMqMessageProducer;
+import com.onlineShop.app.clients.payment.CreateUserRequest;
 import com.shop.user.model.Gender;
 import com.shop.user.model.PasswordResponse;
 import com.shop.user.model.User;
@@ -23,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
+    private final RabbitMqMessageProducer rabbitMqMessageProducer;
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -44,6 +47,9 @@ public class UserService {
         user.setSalt(s);
 
         userRepository.save(user);
+
+        CreateUserRequest createUserRequest = new CreateUserRequest(user.getId());
+        rabbitMqMessageProducer.publish(createUserRequest,"internal.exchange","internal.payment.routing-key");
 
         return true;
     }
