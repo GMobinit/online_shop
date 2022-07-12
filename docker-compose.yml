@@ -27,6 +27,8 @@ services:
       MYSQL_PASSWORD: pass
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: payment
+      MYSQL_ROOT_HOST: 'localhost'
+      MYSQL_HOST: 'localhost'
     volumes:
       - mysql:/var/lib/mysql
     ports:
@@ -49,6 +51,14 @@ services:
       - 8082:80
     networks:
       - mysql
+  rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - spring
 volumes:
   data: {}
   mysql:
