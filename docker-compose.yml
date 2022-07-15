@@ -59,6 +59,13 @@ services:
       - "15672:15672"
     networks:
       - spring
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - spring
 volumes:
   data: {}
   mysql:
