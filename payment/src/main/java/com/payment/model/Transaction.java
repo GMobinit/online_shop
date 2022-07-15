@@ -22,4 +22,7 @@ public class Transaction {
     private String result;
     private Currency currency;
     private BigDecimal amount;
+    @ManyToOne(targetEntity = Transaction.class)
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    private User user;
 }

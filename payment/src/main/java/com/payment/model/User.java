@@ -5,7 +5,9 @@ import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,4 +24,6 @@ public class User {
     private Long wallet;
     private BigDecimal balance;
     private Currency currency;
+    @OneToMany(targetEntity = Transaction.class, mappedBy = "user")
+    private List<Transaction> transaction = new ArrayList<>();
 }
