@@ -15,6 +15,7 @@
         <module>security</module>
         <module>amqp</module>
       <module>clients</module>
+        <module>ApiGw</module>
     </modules>
 
     <name>online_shop</name>
