@@ -43,7 +43,6 @@ public class User {
     private Gender gender;
     @Password
     private String password;
-    private String salt;
     @CreatedDate
     private Instant createdAt;
     @CreatedDate

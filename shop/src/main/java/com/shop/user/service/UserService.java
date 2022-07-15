@@ -2,6 +2,7 @@ package com.shop.user.service;
 
 import com.onlineShop.app.amqp.RabbitMqMessageProducer;
 import com.onlineShop.app.clients.payment.CreateUserRequest;
+import com.onlineshop.app.clients.security.CreateUserSecurityRequest;
 import com.shop.user.model.Gender;
 import com.shop.user.model.PasswordResponse;
 import com.shop.user.model.User;
@@ -29,24 +30,12 @@ public class UserService {
 
     public boolean registerUser(@RequestBody @Valid User user) throws Exception {
 
-        String password = user.getPassword();
-
-        PasswordResponse salt = restTemplate.getForObject("http://SECURITY/api/v1/security/salt", PasswordResponse.class);
-        assert salt != null;
-        HashMap<String,String> params = new HashMap<String,String>();
-        String s = salt.saltOrPass();
-        params.put("salt",s);
-        params.put("passWord",user.getPassword());
-        PasswordResponse encryptedPassword = restTemplate.getForObject("http://SECURITY/api/v1/security/encrypt_password/{salt}/{passWord}", PasswordResponse.class,params);
-
-        assert encryptedPassword != null;
-        user.setPassword(encryptedPassword.saltOrPass());
-        user.setSalt(s);
-
         userRepository.save(user);
 
         CreateUserRequest createUserRequest = new CreateUserRequest(user.getId());
+        CreateUserSecurityRequest userSecurityRequest = new CreateUserSecurityRequest(user.getId(),user.getUserName(), user.getPassword());
         rabbitMqMessageProducer.publish(createUserRequest,"internal.exchange","internal.payment.routing-key");
+        rabbitMqMessageProducer.publish(userSecurityRequest,"internal.exchange","internal.user.security.routing-key");
 
         return true;
     }

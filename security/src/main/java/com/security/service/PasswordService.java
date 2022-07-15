@@ -1,4 +1,4 @@
-package com.security.password.service;
+package com.security.service;
 
 import org.springframework.stereotype.Service;
 
