@@ -33,14 +33,7 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         HttpStatus status = HttpStatus.BAD_REQUEST;
         try {
-            if (bindingResult.hasErrors()) {
-                List<ObjectError> errors = (bindingResult.getAllErrors());
-                StringBuilder errorMessages = new StringBuilder();
-                for (ObjectError error : errors) {
-                    errorMessages.append(error.getDefaultMessage()).append(", ");
-                }
-                throw new ValidationException(errorMessages.toString());
-            }
+            checkValidations(bindingResult);
             boolean isRegistered = userService.registerUser(user);
             if (isRegistered) {
                 response.put("status", "success");
@@ -55,5 +48,38 @@ public class UserController {
             response.put("message", e.getMessage());
         }
         return new ResponseEntity<>(response.toString(), status);
+    }
+
+    @PutMapping("update/{userId}")
+    ResponseEntity<String> updateUser(@RequestBody @Valid User user, BindingResult bindingResult, @PathVariable String userId) {
+        Map<String, String> response = new HashMap<>();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        try {
+            checkValidations(bindingResult);
+            boolean isUpdated = userService.updateUser(user, userId);
+            if (isUpdated) {
+                response.put("status", "success");
+                response.put("message", "User updated");
+                status = HttpStatus.CREATED;
+            } else {
+                response.put("status", "failed");
+                response.put("message", "Update Failed");
+            }
+        } catch (Exception e) {
+            response.put("status", "failed");
+            response.put("message", e.getMessage());
+        }
+        return new ResponseEntity<>(response.toString(), status);
+    }
+
+    private void checkValidations(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = (bindingResult.getAllErrors());
+            StringBuilder errorMessages = new StringBuilder();
+            for (ObjectError error : errors) {
+                errorMessages.append(error.getDefaultMessage()).append(", ");
+            }
+            throw new ValidationException(errorMessages.toString());
+        }
     }
 }

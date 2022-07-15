@@ -14,10 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -51,6 +48,23 @@ public class UserService {
         CreateUserRequest createUserRequest = new CreateUserRequest(user.getId());
         rabbitMqMessageProducer.publish(createUserRequest,"internal.exchange","internal.payment.routing-key");
 
+        return true;
+    }
+
+    public boolean updateUser(User user, String userId) {
+        Optional<User> existUser = userRepository.findById(userId);
+
+        if (existUser.isEmpty()){
+            throw new IllegalStateException("This user doesn't exist and can't be updated");
+        }
+        User relatedUser = existUser.get();
+        relatedUser.setGender(user.getGender());
+        relatedUser.setPhone(user.getPhone());
+        relatedUser.setEmail(user.getEmail());
+        relatedUser.setLastName(user.getLastName());
+        relatedUser.setMiddleName(user.getMiddleName());
+        relatedUser.setFirstName(user.getFirstName());
+        userRepository.save(relatedUser);
         return true;
     }
 }
