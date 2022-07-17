@@ -1,4 +1,4 @@
-package com.shop.user.validator;
+package com.shop.validator;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;

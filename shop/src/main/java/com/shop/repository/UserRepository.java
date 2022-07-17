@@ -1,6 +1,6 @@
-package com.shop.user.repository;
+package com.shop.repository;
 
-import com.shop.user.model.User;
+import com.shop.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

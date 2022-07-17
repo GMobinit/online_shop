@@ -1,4 +1,4 @@
-package com.shop.user.model;
+package com.shop.model;
 
 public record PasswordResponse(String saltOrPass) {
 }

@@ -1,19 +1,16 @@
-package com.shop.user.service;
+package com.shop.service;
 
 import com.onlineShop.app.amqp.RabbitMqMessageProducer;
 import com.onlineShop.app.clients.payment.CreateUserRequest;
-import com.shop.user.model.Gender;
-import com.shop.user.model.PasswordResponse;
-import com.shop.user.model.User;
-import com.shop.user.model.UserRegistrationRequest;
-import com.shop.user.repository.UserRepository;
+import com.shop.model.PasswordResponse;
+import com.shop.model.User;
+import com.shop.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service

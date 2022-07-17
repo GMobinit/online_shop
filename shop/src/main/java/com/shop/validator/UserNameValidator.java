@@ -1,6 +1,6 @@
-package com.shop.user.validator;
+package com.shop.validator;
 
-import com.shop.user.repository.UserRepository;
+import com.shop.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import javax.validation.ConstraintValidator;

@@ -1,9 +1,7 @@
-package com.shop.user.controller;
+package com.shop.controller;
 
-import com.jayway.jsonpath.spi.json.GsonJsonProvider;
-import com.shop.user.service.UserService;
-import com.shop.user.model.User;
-import com.shop.user.model.UserRegistrationRequest;
+import com.shop.service.UserService;
+import com.shop.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,4 +80,5 @@ public class UserController {
             throw new ValidationException(errorMessages.toString());
         }
     }
+
 }
