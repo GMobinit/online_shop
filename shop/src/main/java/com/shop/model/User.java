@@ -1,8 +1,8 @@
-package com.shop.user.model;
+package com.shop.model;
 
-import com.shop.user.validator.Password;
-import com.shop.user.validator.Phone;
-import com.shop.user.validator.UserName;
+import com.shop.validator.Password;
+import com.shop.validator.Phone;
+import com.shop.validator.UserName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

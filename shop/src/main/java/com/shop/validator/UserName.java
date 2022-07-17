@@ -1,4 +1,4 @@
-package com.shop.user.validator;
+package com.shop.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

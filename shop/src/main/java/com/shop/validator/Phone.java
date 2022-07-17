@@ -1,4 +1,4 @@
-package com.shop.user.validator;
+package com.shop.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -6,10 +6,10 @@ import java.lang.annotation.*;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordValidator.class)
+@Constraint(validatedBy = PhoneNumberValidator.class)
 @Documented
-public @interface Password {
-    String message() default "{validation.password.invalid}";
+public @interface Phone {
+    String message() default "{validation.phoneNumber.invalid}";
 
     Class<?>[] groups() default { };
 
