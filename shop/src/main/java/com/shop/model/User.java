@@ -39,7 +39,7 @@ public class User {
     private String email;
     @NotBlank(message = "{validation.email.mandatory}")
     @Phone(message = "{validation.phoneNumber.invalid}")
-    private String phone;
+    private PhoneNumber phone;
     private Gender gender;
     @Password
     private String password;

@@ -24,9 +24,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public boolean registerUser(@RequestBody @Valid User user) throws Exception {
-
-        String password = user.getPassword();
+    public boolean registerUser(@RequestBody @Valid User user) {
 
         PasswordResponse salt = restTemplate.getForObject("http://SECURITY/api/v1/security/salt", PasswordResponse.class);
         assert salt != null;
