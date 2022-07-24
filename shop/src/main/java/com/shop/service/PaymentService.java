@@ -34,14 +34,14 @@ public class PaymentService {
 
     public BuyProductResponse buyProduct(String userName, String productId) {
         Optional<User> user = userRepository.findUserByUserName(userName);
+        if (user.isEmpty()){
+            throw new IllegalStateException("User with this user name not found");
+        }
         Optional<Product> product = productRepository.findById(productId);
         if (product.isEmpty()) {
             throw new IllegalStateException("Product not found");
         }
         Product productObject = product.get();
-        if (user.isEmpty()){
-            throw new IllegalStateException("User with this user name not found");
-        }
         User userObject = user.get();
         BuyProductRequest buyProductRequest = new BuyProductRequest(userObject.getId(),productObject.getPrice(),productObject.getId());
 
